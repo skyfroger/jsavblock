@@ -1,23 +1,36 @@
-# Jsavblock Extension For Quarto
+# Jsavblock
 
-_TODO_: Add a short description of your extension.
+Расширение для встраивания иллюстраций работы алгоритмов, созданных с помощью библиотеки [JSAV](https://github.com/vkaravir/JSAV/).
 
-## Installing
-
-_TODO_: Replace the `<github-organization>` with your GitHub organization.
+## Установка
 
 ```bash
-quarto add <github-organization>/jsavblock
+quarto add skyfroger/jsavblock
 ```
 
-This will install the extension under the `_extensions` subdirectory.
-If you're using version control, you will want to check in this directory.
+## Использование расширения
 
-## Using
+Добавьте пустой div-элемент с классом `.jsavblock` а также идентификатором визуализации:
 
-_TODO_: Describe how to use your extension.
+```markdown
+:::{.jsavblock #visId}
 
-## Example
+:::
+```
 
-Here is the source code for a minimal example: [example.qmd](example.qmd).
+Разместите на странице скрипт с кодом визуализации. Поместите код в тег `script` с атрибутом `type="module"`. Атрубут необходим для того, чтобы данный скрипт выполнялся только после загрузки всех зависимостей.
+
+```markdown
+<script type="moduel">
+	$(document).ready(function () {
+  		const avName = 'visId'; // id div-элемента в который помещаем визуализацию
+  		const av = new JSAV(avName); // переменная с визуализацией
+  		...
+  	})
+</script>
+```
+
+## Пример
+
+Пример использования расширения показан в этом файле: [example.qmd](example.qmd).
 

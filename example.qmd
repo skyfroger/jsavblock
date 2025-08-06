@@ -1,11 +1,174 @@
 ---
-title: "Jsavblock Example"
+title: "Примеры визуализации алгоритмов"
 filters:
   - jsavblock
 ---
 
-## Heading
+### Сортировка выбором
 
-This filter adds formatting to heading text.
+:::{.jsavblock #selectionSort}
 
+<script type="module">
+    $(document).ready(function () {
+  const avName = 'selectionSort'; // id div-элемента в который помещаем визуализацию
+  const av = new JSAV(avName); // переменная с визуализацией
+
+
+  // массив из пяти случайных чисел из указанного отрезка
+  let theArray = JSAV.utils.rand.numKeys(1, 100, 5);
+
+  // Псевдокод решения
+
+  // const pseudo = av.code([
+  //   'max = array[0]',
+  //   'перебираем элементы массива',
+  //   '    если array[i] больше max, то',
+  //   '        max = array[i]',
+  // ]);
+
+  // визуализатор сгенерированного массива
+  const arr = av.ds.array(theArray, { indexed: true, layout: 'bar' });
+
+  function selectionSort() {
+    av.umsg(
+      'На каждом проходе алгоритма будем искать минимальный элемент массива и ставить его в конце неотсортированной части массива.'
+    );
+    av.step();
+
+    let N = arr.size();
+    for (let i = 0; i < N - 1; i++) {
+      arr.addClass(i, 'special');
+      av.umsg(
+        `Переменная <code>i</code> внешнего цикла равна ${i}. Будем считать минимальным элемент с этим индексом.`
+      );
+      // pseudo.setCurrentLine("outloop");
+      av.step();
+      let minJ = i;
+      for (let j = i; j < N; j++) {
+        av.umsg('Ищем минимальный элемент с помощью вложенного цикла.');
+        arr.addClass(j, 'processing');
+        av.step();
+        if (arr.value(j) < arr.value(minJ)) {
+          av.umsg(
+            `${arr.value(j)} < ${arr.value(
+              minJ
+            )}. Найден очередной минимальный элемент.`
+          );
+          arr.removeClass(minJ, 'special');
+          av.step();
+          minJ = j;
+          av.umsg('Сохраняем индекс найденного минимального элемента.');
+          arr.addClass(minJ, 'special');
+          av.step();
+        }
+        arr.removeClass(j, 'processing');
+      }
+      arr.removeClass(minJ, 'special');
+      av.umsg(`Меняем местами элементы с индексами ${i} и ${minJ}.`);
+      if (i !== minJ) arr.swap(i, minJ);
+      av.step();
+      arr.addClass(i, 'deemph');
+      av.umsg(
+        `Проход внешнего цикла завершён. Теперь элемент с индексом ${i} находится на правильной позиции.`
+      );
+      av.step();
+    }
+    av.umsg('Сортировка завершена.');
+    arr.addClass(true, 'deemph');
+    av.step();
+  }
+
+  av.umsg('Задача - использовать сортировку выбором.');
+  av.displayInit();
+  av.step();
+  selectionSort();
+  av.recorded(); // mark the end
+});
+
+</script>
+
+:::
+
+
+
+### Линейный поиск
+
+:::{.jsavblock #linearSearch}
+
+:::
+
+<script type="module">
+    $(document).ready(function () {
+  const avName = 'linearSearch'; // id div-элемента в который помещаем визуализацию
+  const av = new JSAV(avName); // переменная с визуализацией
+
+  // массив из пяти случайных чисел из указанного отрезка
+  let theArray = JSAV.utils.rand.numKeys(1, 100, 7);
+  let randSearchIndex = JSAV.utils.rand.numKey(2, theArray.length);
+  let searchKeyValue = theArray[randSearchIndex];
+  // Псевдокод решения
+
+  // const pseudo = av.code([
+  //   'max = array[0]',
+  //   'перебираем элементы массива',
+  //   '    если array[i] больше max, то',
+  //   '        max = array[i]',
+  // ]);
+
+  // визуализатор сгенерированного массива
+  const arr = av.ds.array(theArray, { indexed: true, left: 370 });
+
+  var searchKey = av.ds.array([searchKeyValue], { left: 100 });
+  av.label('Ключ:', { left: 55 });
+
+  var index = av.ds.array([0], { left: 240 });
+  av.label('Индекс:', { left: 180 });
+
+  function linearSearch() {
+    av.umsg(
+      'Будем последовательно перебирать элементы массива до тех пор, пока не найдём подходящее значение.'
+    );
+    av.step();
+    av.umsg(
+      'Начальное значение индекса -1. Так мы обозначим, что элемент может отсутсвовать в массиве.'
+    );
+    index.value(0, -1);
+    index.highlight(0);
+    av.step();
+    index.unhighlight(true);
+    for (let i = 0; i < arr.size(); i++) {
+      av.umsg(`Сравниваем ключ и элемент с индексом ${i}`);
+      arr.highlight(i);
+      av.step();
+      if (arr.value(i) === searchKeyValue) {
+        av.umsg(
+          `Ключ ${searchKeyValue} найден. Сохраним индекс найденного элемента.`
+        );
+        index.highlight(0);
+        index.value(0, i);
+        av.step();
+        index.unhighlight(true);
+        break;
+      }
+      arr.unhighlight(true);
+    }
+    arr.unhighlight(true);
+    av.umsg(
+      `Значение ${searchKeyValue} найдено в массиве под индексом ${index.value(
+        0
+      )}`
+    );
+    av.step();
+  }
+
+  av.umsg(
+    `Задача - найти в массиве индекс элемента со значением равным ${searchKeyValue}.`
+  );
+  av.displayInit();
+  av.step();
+  linearSearch();
+  av.recorded(); // mark the end
+});
+
+</script>
 
