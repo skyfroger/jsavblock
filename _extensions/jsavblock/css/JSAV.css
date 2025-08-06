@@ -36,6 +36,7 @@
   position: relative;
   background-color: inherit;
   overflow-x: auto;
+  min-width: 100% !important;
 }
 
 .jsavnode {
@@ -294,7 +295,7 @@
   overflow: visible;
   border: none;
   background-color: inherit;
-  height: 50px;
+  min-height: 3.5rem;
 }
 .jsavscroll {
   overflow: auto;
