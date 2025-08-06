@@ -1,0 +1,17 @@
+.processing {
+  background-color: #8ab1d0 !important;
+}
+
+.special {
+  background-color: #ffb6c1 !important;
+}
+
+/* For de-emphasizing the label/value of a node (array cell, etc). Light grey. */
+.deemph {
+  background-color: rgb(33, 202, 78) !important;
+}
+
+/* For de-emphasizing the label/value of a node (array cell, etc). Light grey. */
+.deemph {
+  background-color: #e1fc88 !important;
+}
