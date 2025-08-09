@@ -13,9 +13,9 @@ local function writeEnvironments()
       name = "JSAV",
       version = "1.0.1",
       scripts = {
-        { path = "js/JSAV-min.js",    afterBody = "true" },
-        { path = "js/dagre.min.js", afterBody = "true" },
         { path = "js/raphael.js", afterBody = "true" },
+        { path = "js/dagre.min.js", afterBody = "true" },
+        { path = "js/JSAV-min.js",    afterBody = "true" },
       },
       stylesheets = { "css/JSAV.css", "css/styles.css" }
     })
